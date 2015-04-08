@@ -17,8 +17,7 @@ function loadDependency(depend, callback)
 var executeReplacements = function() {
     walk(document.body);
 }
-
-loadDependency("chrome-extension://femoppemmdinldnnjbeopjagpcdgalkd/data.js", executeReplacements);
+loadDependency("chrome-extension://" + chrome.runtime.id + "/data.js", executeReplacements);
 
 // Stolen from the cloud to butt extension
 function walk(node)
