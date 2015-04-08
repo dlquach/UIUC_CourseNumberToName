@@ -1,5 +1,23 @@
+function loadDependency(depend, callback)
+{
+    var head = document.getElementsByTagName('head')[0];
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = depend;
+
+    script.onreadystatechange = callback;
+    script.onload = callback;
+
+    head.appendChild(script);
+}
+
+
 // Code heavily inspired by the cloud to butt extension
-walk(document.body);
+var executeReplacements = function() {
+    walk(document.body);
+}
+
+loadDependency("chrome-extension://femoppemmdinldnnjbeopjagpcdgalkd/data.js", executeReplacements);
 
 // Stolen from the cloud to butt extension
 function walk(node)
@@ -27,11 +45,16 @@ function walk(node)
 function handleText(textNode)
 {
     var v = textNode.nodeValue;
+    
+    for (var key in data) 
+    {
+        keyComponents = key.split(' ');
+        regexp = new RegExp(key, "gi");
+        regexpNoSpace = new RegExp(keyComponents[0] + keyComponents[1], "gi");
+        v = v.replace(regexp, "$& (" + data[key] + ")");
+        v = v.replace(regexpNoSpace, "$& (" + data[key] + ")");
+    }
 
-    v = v.replace(/\bcs 241\b/gi, "$& (System Programming)");
-    v = v.replace(/\bcs241\b/gi, "$& (System Programming)");
-    v = v.replace(/\bCS 225\b/gi, "$& (Data Structures)");
-    v = v.replace(/\bCS225\b/gi, "$& (Data Structures)");
     textNode.nodeValue = v;
 }
 

@@ -3,12 +3,13 @@
     "name": "UIUC_CourseNumberToName",
     "version": "1.0",
     "description": "Replace all course numbers in a page (ex. CS 241) with the actual course.",
+    "web_accessible_resources": ["data.js"],
 
     "content_scripts":
     [
         {
             "matches": ["*://*/*"],
-            "js": ["content_script.js"],
+            "js": ["content_script.js", "data.js"],
             "run_at": "document_end"
         }
     ]
