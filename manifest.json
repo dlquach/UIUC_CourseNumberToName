@@ -1,0 +1,16 @@
+{
+    "manifest_version": 2,
+    "name": "UIUC_CourseNumberToName",
+    "version": "1.0",
+    "description": "Replace all course numbers in a page (ex. CS 241) with the actual course.",
+
+    "content_scripts":
+    [
+        {
+            "matches": ["*://*/*"],
+            "js": ["content_script.js"],
+            "run_at": "document_end"
+        }
+    ]
+
+}
