@@ -65,18 +65,7 @@ function handleText(textNode)
             v = v.replace(regexp, "$& (" + data[key] + ")");
         }
     }
-
-    /*
-    for (var key in data) 
-    {
-        keyComponents = key.split(' ');
-        regexp = new RegExp(key, "gi");
-        regexpNoSpace = new RegExp(keyComponents[0] + keyComponents[1], "gi");
-        v = v.replace(regexp, "$& (" + data[key] + ")");
-        v = v.replace(regexpNoSpace, "$& (" + data[key] + ")");
-    }
-    */
-
+    
     textNode.nodeValue = v;
 }
 
