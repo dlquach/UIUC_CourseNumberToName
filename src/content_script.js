@@ -45,7 +45,28 @@ function walk(node)
 function handleText(textNode)
 {
     var v = textNode.nodeValue;
-    
+   
+    // This regexp captures CS then at least 3 numbers and a comma at least once
+    // Ex. CS 101, 241, 373
+    testre = new RegExp("CS(\,*\\s*[0-9]{3})+", "gi");
+    var results = testre.exec(v);
+    if (results != null) 
+    {
+        var raw = results[0].split(",");
+        var result = [];
+        for (var ele in raw)
+        {
+            result.push(raw[ele].replace(/\D/g, ''));
+        }
+        for (var crn in result) 
+        {
+            var key = "CS " + result[crn];
+            regexp = new RegExp(result[crn], "gi");
+            v = v.replace(regexp, "$& (" + data[key] + ")");
+        }
+    }
+
+    /*
     for (var key in data) 
     {
         keyComponents = key.split(' ');
@@ -54,6 +75,7 @@ function handleText(textNode)
         v = v.replace(regexp, "$& (" + data[key] + ")");
         v = v.replace(regexpNoSpace, "$& (" + data[key] + ")");
     }
+    */
 
     textNode.nodeValue = v;
 }
