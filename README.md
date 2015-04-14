@@ -4,4 +4,5 @@ A Chrome extension to replace CS course numbers with the actual course name. Ide
 TODO:
 
 Support more than just CS courses
+
 More efficient (spams walk function a lot)
