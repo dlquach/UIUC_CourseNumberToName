@@ -16,6 +16,9 @@ function loadDependency(depend, callback)
 // Code heavily inspired by the cloud to butt extension
 var executeReplacements = function() {
     walk(document.body);
+    document.addEventListener('DOMNodeInserted', function (event) {
+        walk(event.relatedNode);
+    });
 }
 loadDependency("chrome-extension://" + chrome.runtime.id + "/data.js", executeReplacements);
 
@@ -48,7 +51,7 @@ function handleText(textNode)
    
     // This regexp captures CS then at least 3 numbers and a comma at least once
     // Ex. CS 101, 241, 373
-    testre = new RegExp("CS(\,*\\s*(and)*\\s*(CS)*\\s*[0-9]{3})+", "gi");
+    testre = new RegExp("CS(\,*\\s*(and)*\\s*(CS)*\\s*[0-9]{3}(?!\\s\\())+", "gi");
     var results = testre.exec(v);
     if (results != null) 
     {
