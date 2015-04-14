@@ -48,11 +48,13 @@ function handleText(textNode)
    
     // This regexp captures CS then at least 3 numbers and a comma at least once
     // Ex. CS 101, 241, 373
-    testre = new RegExp("CS(\,*\\s*[0-9]{3})+", "gi");
+    testre = new RegExp("CS(\,*\\s*(and)*\\s*(CS)*\\s*[0-9]{3})+", "gi");
     var results = testre.exec(v);
     if (results != null) 
     {
-        var raw = results[0].split(",");
+        // This lets us parse comma lists with any number of ands in the list as well
+        var raw = results[0].replace("and", ',');
+        raw = raw.split(",");
         var result = [];
         for (var ele in raw)
         {
@@ -60,12 +62,14 @@ function handleText(textNode)
         }
         for (var crn in result) 
         {
-            var key = "CS " + result[crn];
-            regexp = new RegExp(result[crn], "gi");
-            v = v.replace(regexp, "$& (" + data[key] + ")");
+            // We expect course numbers to be of length 3
+            if (result[crn].length == 3) {
+                var key = "CS " + result[crn];
+                regexp = new RegExp(result[crn], "gi");
+                v = v.replace(regexp, "$& (" + data[key] + ")");
+            }
         }
     }
-    
     textNode.nodeValue = v;
 }
 
